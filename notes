@@ -1,0 +1,36 @@
+uplods things in aws s3 
+
+1.flow 
+    sent data in backend 
+    then sent the image/video/audio to the s3 bucket
+
+2.Presigned url
+    Directly sent image/video from frontend to the s3 bucket 
+    flow of this 
+        1.whenver user select image for upload 
+        2.then frontend send a get request to the backend that is /getPresignedUrl 
+        3.then backend get url from aws s3 and then send url to the fronted and with the help of this url frontend can upload image to s3
+        4.after upload fronted get the meta data of upload ,then this meta data with some details (like product details in case of ecommerce) sent to the backend again for reference
+
+
+CDN is used for access the private s3 ,for getting the access of image/video directly from aws without cdn then s3 ko public rkhna pdega
+
+
+
+
+
+1.create a bucket in the aws
+2.create user that can access that bucket
+3.create custom policy for giving acces anly to put object in bucket
+4.attach that policy to the user
+5.create access key for that user and keep it in the backnd env
+
+if i uplod file in s3 with same name that is already present in s3 to purani file rewrite ho jayegi new file se
+
+
+Inside s3 below are the main features
+lifecycle configuration for buckets --> shifting content from s3 to ssd/harddrive/glacier  etc jb content use na hua ho like agr 10 din se use nhi hua to shift kr to harddrive me etc
+cloud trail---> see kis user ne kya kiya
+event notification ----> kisi bhi event like put delete get pe humn notification bhej skte hai user ko 
+Replication rules
+Inventory configurations ----> for monitoring the bucket 
