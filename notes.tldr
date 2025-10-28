@@ -75,9 +75,9 @@
 		{
 			"id": "pointer:pointer",
 			"typeName": "pointer",
-			"x": -151.914505243024,
-			"y": 1382.8190472150477,
-			"lastActivityTimestamp": 1760711130669,
+			"x": 305.0822132678154,
+			"y": 1389.1532499385964,
+			"lastActivityTimestamp": 1761584246583,
 			"meta": {}
 		},
 		{
@@ -559,9 +559,9 @@
 			"typeName": "shape"
 		},
 		{
-			"x": 844.2449727949609,
-			"y": -1001.2852197487639,
-			"z": 0.7046324759029101,
+			"x": 1798.828085027551,
+			"y": -933.9021807556733,
+			"z": 0.30752261658884095,
 			"meta": {},
 			"id": "camera:page:page",
 			"typeName": "camera"
@@ -1053,8 +1053,10 @@
 		{
 			"editingShapeId": null,
 			"croppingShapeId": null,
-			"selectedShapeIds": [],
-			"hoveredShapeId": null,
+			"selectedShapeIds": [
+				"shape:3GcoLlweXCjDY2t1oP1Fs"
+			],
+			"hoveredShapeId": "shape:3GcoLlweXCjDY2t1oP1Fs",
 			"erasingShapeIds": [],
 			"hintingShapeIds": [],
 			"focusedGroupId": null,
@@ -2510,13 +2512,12 @@
 			"followingUserId": null,
 			"opacityForNextShape": 1,
 			"stylesForNextShape": {
-				"tldraw:geo": "rectangle",
-				"tldraw:color": "black"
+				"tldraw:geo": "rectangle"
 			},
 			"brush": null,
 			"scribbles": [],
 			"cursor": {
-				"type": "default",
+				"type": "ns-resize",
 				"rotation": 0
 			},
 			"isFocusMode": false,
@@ -2526,8 +2527,8 @@
 			"screenBounds": {
 				"x": 0,
 				"y": 0,
-				"w": 1326.6666259765625,
-				"h": 759.1666259765625
+				"w": 1554,
+				"h": 934
 			},
 			"insets": [
 				false,
@@ -2542,7 +2543,7 @@
 			"isChatting": false,
 			"highlightedUserIds": [],
 			"isFocused": true,
-			"devicePixelRatio": 1.2000000476837158,
+			"devicePixelRatio": 1,
 			"isCoarsePointer": false,
 			"isHoveringCanvas": true,
 			"openMenus": [],
@@ -2807,6 +2808,43 @@
 			},
 			"parentId": "page:page",
 			"index": "a6pLuTiV",
+			"typeName": "shape"
+		},
+		{
+			"x": -1106.1961011992464,
+			"y": 1402.160423343823,
+			"rotation": 0,
+			"isLocked": false,
+			"opacity": 1,
+			"meta": {},
+			"id": "shape:3GcoLlweXCjDY2t1oP1Fs",
+			"type": "geo",
+			"props": {
+				"w": 3827.360774487862,
+				"h": 1271.4512003608784,
+				"geo": "rectangle",
+				"dash": "draw",
+				"growY": 0,
+				"url": "",
+				"scale": 1,
+				"color": "black",
+				"labelColor": "black",
+				"fill": "none",
+				"size": "m",
+				"font": "draw",
+				"align": "middle",
+				"verticalAlign": "middle",
+				"richText": {
+					"type": "doc",
+					"content": [
+						{
+							"type": "paragraph"
+						}
+					]
+				}
+			},
+			"parentId": "page:page",
+			"index": "ad6k1E4V",
 			"typeName": "shape"
 		},
 		{

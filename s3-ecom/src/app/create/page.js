@@ -7,6 +7,7 @@ const CreateProductPage = () => {
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState("");
     const [fileName, setFileName] = useState("");
+    const [privateProduct, setPrivateProduct] = useState(false);
 
     // Function to handle image change
     const handleImageChange = async (e) => {
@@ -26,10 +27,14 @@ const CreateProductPage = () => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ mime }),
+                credentials: 'include',
             });
 
             if(!response.ok) {
                 console.error("Failed to get presigned URL");
+                if(response.status === 401) {
+                    window.alert("You are not logged in");
+                }
                 return;
             }
             const data = await response.json();
@@ -67,16 +72,21 @@ const CreateProductPage = () => {
             headers: {
                 'Content-Type': 'application/json',
             },
+            credentials: 'include',
             body: JSON.stringify({
                 name,
                 description,
                 price,
                 filename: fileName,
+                privateProduct
             }),
         });
 
         if (!res.ok) {
             console.error("Failed to create product");
+            if(res.status === 401) {
+                window.alert("You are not logged in,Please loggdin before creating a product");
+            }
             return;
         }
 
@@ -88,6 +98,7 @@ const CreateProductPage = () => {
         setPrice("");
         setImageFile(null);
         setFileName("");
+        setPrivateProduct(false);
 
     };
 
@@ -158,6 +169,21 @@ const CreateProductPage = () => {
                         placeholder="0.00"
                         className="w-36 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     />
+                </div>
+                <div className="mb-6">
+                    <label className="block text-sm font-medium mb-1">
+                        Private Product
+                    </label>
+                    <div className="flex items-center gap-3">
+                        <label className="flex items-center">
+                            <input type="radio" name="privateProduct" value={false} onChange={(e) => setPrivateProduct(e.target.value === 'true')} className="mr-2" defaultChecked/>
+                            False
+                        </label>
+                        <label className="flex items-center">
+                            <input type="radio" name="privateProduct" value={true} onChange={(e) => setPrivateProduct(e.target.value === 'true')} className="mr-2"/>
+                            True
+                        </label>
+                    </div>
                 </div>
 
                 <div className="flex items-center gap-3">

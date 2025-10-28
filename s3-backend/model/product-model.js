@@ -7,6 +7,7 @@ const productSchema = new Schema({
     description: String,
     price: Number,
     filename: String,
+    privateProduct:Boolean
 });
 
 export const ProductModel = mongoose.model('Product', productSchema);

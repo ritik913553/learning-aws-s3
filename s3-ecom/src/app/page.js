@@ -1,20 +1,83 @@
+"use client";
 import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
-export default async function Home() {
+export default function Home() {
+    const [loggedIn, setLoggedIn] = useState(false);
+    const [products, setProducts] = useState([]);
 
-  const res = await fetch('http://localhost:3200/api/products');
+    useEffect(() => {
+        console.log("Checking login status from localStorage");
+        if (typeof window !== "undefined") {
+            const status = localStorage.getItem("loggedIn") === "true";
+            setLoggedIn(status);
+        }
+    }, []);
 
-  if(!res.ok) {
-    console.error("Failed to fetch products");
-    return;
-  }
+    const handleLogout = async () => {
+        try {
+            const res = await fetch("http://localhost:3200/api/auth/logout", {
+                method: "POST",
+                credentials: "include",
+            });
 
-  const products = await res.json();
-  console.log("Products fetched:", products);
+            const data = await res.json();
 
+            if (!res.ok)
+                throw new Error(data.message || "Something went wrong");
+
+            setLoggedIn(false);
+            localStorage.setItem("loggedIn", "false");
+        } catch (err) {
+            console.error("Logout failed:", err);
+        }
+    };
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const res = await fetch("http://localhost:3200/api/products", {
+                    method: "GET",
+                    credentials: "include",
+                });
+                const data = await res.json();
+                setProducts(data || []);
+            } catch (error) {
+                console.error("Error fetching products:", error);
+            }
+        };
+        fetchProducts();
+    }, [loggedIn]); // ✅ Empty dependency array ensures it runs only once
 
     return (
         <div className="min-h-screen w-full bg-gray/10 py-10 px-6">
+            <div className="w-full flex justify-end">
+                {loggedIn ? (
+                    <div className="flex gap-4">
+                        <button
+                            className="text-white bg-red-600 px-4 py-1 rounded-md font-bold text-sm"
+                            onClick={handleLogout}
+                        >
+                            Logout
+                        </button>
+                        <Link
+                            href={"/create"}
+                            className="text-white bg-blue-600 px-4 py-1 rounded-md font-bold text-sm"
+                        >
+                            Add products
+                        </Link>
+                    </div>
+                ) : (
+                    <Link
+                        className="text-white bg-blue-600 px-4 py-1 rounded-md font-bold text-sm"
+                        href="/auth"
+                    >
+                        Login / Sign Up
+                    </Link>
+                )}
+            </div>
+
             <h2 className="text-3xl font-semibold text-center mb-10">
                 Product List
             </h2>
@@ -28,14 +91,19 @@ export default async function Home() {
                             key={index}
                             className="bg-white/10 rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden"
                         >
-                            {/* Product Image */}
-                            <img
-                                src={`https://d21d75qyy0swbi.cloudfront.net/${product.filename}`}
-                                alt={product.name}
-                                className="w-full h-56 object-cover"
-                            />
-
-                            {/* Product Details */}
+                            {product.imageUrl ? (
+                                <img
+                                    src={`${product.imageUrl}`}
+                                    alt={product.name}
+                                    className="w-full h-56 object-cover"
+                                />
+                            ) : (
+                                <img
+                                    src={`https://imgs.search.brave.com/fjZKoA2xz9J1oTC0a70stjc8lyIEFjlE32tH-oWhndY/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/dmVjdG9yc3RvY2su/Y29tL2kvNTAwcC81/MS83Mi9uby1waG90/by1hdmFpbGFibGUt/aWNvbi1kZWZhdWx0/LWltYWdlLXN5bWJv/bC12ZWN0b3ItNDA4/ODUxNzIuanBn`}
+                                    alt={product.name}
+                                    className="w-full h-56 object-cover"
+                                />
+                            )}
                             <div className="p-5">
                                 <h3 className="text-xl font-semibold mb-2">
                                     {product.name}
